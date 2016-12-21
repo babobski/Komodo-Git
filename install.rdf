@@ -4,7 +4,7 @@
 	<Description about="urn:mozilla:install-manifest">
 <em:unpack>true</em:unpack>
 		<em:id>Komodo-Git@babobski.com</em:id>
-		<em:name>Basic git integration</em:name>
+		<em:name>Komodo Git</em:name>
 		<em:version>1.1</em:version>
 		<em:description>Git intergration for Komodo Edit/Ide</em:description>
 		<em:creator>Bob de Haas</em:creator>
