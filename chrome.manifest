@@ -1,0 +1,6 @@
+content komodo_git content/
+overlay chrome://komodo/content/komodo.xul chrome://komodo_git/content/overlay.xul
+overlay chrome://komodo/content/komodo.xul chrome://komodo_git/content/tab-overlay.xul
+overlay chrome://komodo-places/content/places_panel.xul  chrome://komodo_git/content/overlay-places.xul
+overlay chrome://komodo/content/commandsOverlay.xul chrome://komodo_git/content/commandsOverlay.xul
+skin komodo_git classic/1.0 skin/

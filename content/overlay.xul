@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="less://komodo/skin/global/global.less" type="text/css"?>
+<?xml-stylesheet href="less://komodo_git/skin/skin.less" type="text/css"?>
+<overlay id="komodo_git" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+	<script type="application/x-javascript" src="chrome://komodo_git/content/overlay.js" />
+	
+	<commandset id="allcommands">
+		<command id="Tasks:git_status" oncommand="extensions.komodo_git.gitStatus();"/>
+		<command id="Tasks:git_add" oncommand="extensions.komodo_git.gitAdd();"/>
+		<command id="Tasks:git_reset" oncommand="extensions.komodo_git.gitReset();"/>
+		<command id="Tasks:git_reset_hard" oncommand="extensions.komodo_git.gitResetHard();"/>
+		<command id="Tasks:git_commit" oncommand="extensions.komodo_git.gitCommit();"/>
+		<command id="Tasks:git_fetch" oncommand="extensions.komodo_git.gitFetch();"/>
+		<command id="Tasks:git_pull" oncommand="extensions.komodo_git.gitPull();"/>
+		<command id="Tasks:git_pull_ext" oncommand="extensions.komodo_git.gitPullExt();"/>
+		<command id="Tasks:git_push" oncommand="extensions.komodo_git.gitPush();"/>
+		<command id="Tasks:git_stash" oncommand="extensions.komodo_git.gitStash();"/>
+		<command id="Tasks:git_stash_pop" oncommand="extensions.komodo_git.gitStashPop();"/>
+		<command id="Tasks:git_stash_list" oncommand="extensions.komodo_git.gitStashList();"/>
+		<command id="Tasks:git_stash_drop" oncommand="extensions.komodo_git.gitStashDrop();"/>
+		<command id="Tasks:git_diff" oncommand="extensions.komodo_git.gitDiff();"/>
+		<command id="Tasks:git_difftool" oncommand="extensions.komodo_git.gitDiffTool();"/>
+		<command id="Tasks:git_diff_staged" oncommand="extensions.komodo_git.gitDiffStaged();"/>
+		<command id="Tasks:git_merge" oncommand="extensions.komodo_git.gitMerge();"/>
+		<command id="Tasks:git_mergetool" oncommand="extensions.komodo_git.gitMergeTool();"/>
+		<command id="Tasks:git_remote_list" oncommand="extensions.komodo_git.gitRemoteList();"/>
+		<command id="Tasks:git_remote_add" oncommand="extensions.komodo_git.gitRemoteAdd();"/>
+		<command id="Tasks:git_remote_remove" oncommand="extensions.komodo_git.gitRemoteRemove();"/>
+		<command id="Tasks:git_remote_rename" oncommand="extensions.komodo_git.gitRemoteRename();"/>
+		<command id="Tasks:git_remote_set_url" oncommand="extensions.komodo_git.gitRemoteSetUrl();"/>
+		<command id="Tasks:git_add_file" oncommand="extensions.komodo_git.gitAddFile();"/>
+		<command id="Tasks:git_diff_file" oncommand="extensions.komodo_git.gitDiffFile();"/>
+		<command id="Tasks:git_reset_file" oncommand="extensions.komodo_git.gitResetFile();"/>
+		<command id="Tasks:git_add_file_places" oncommand="extensions.komodo_git.gitAddFilePlaces();"/>
+		<command id="Tasks:git_diff_file_places" oncommand="extensions.komodo_git.gitDiffFilePlaces();"/>
+		<command id="Tasks:git_reset_file_places" oncommand="extensions.komodo_git.gitResetFilePlaces();"/>
+		<command id="Tasks:git_run_cmd" oncommand="extensions.komodo_git.runCMD();"/>
+		<command id="Tasks:git_settings" oncommand="extensions.komodo_git.OpenSettings();"/>
+	</commandset>
+	
+	<menupopup id="menubar_main">
+		<menu id="menu_git_overlay" accesskey="g" label="Git">
+		<menupopup id="menu_git_overlay_popup">
+			<menuitem id="menu_git_status"
+					accesskey="s"
+					label="Git status"
+					observes="Tasks:git_status"
+					class="menu-iconic-wide" />
+			<menuitem id="menu_git_add"
+					accesskey="a"
+					label="Git add"
+					observes="Tasks:git_add"
+					class="menu-iconic-wide" />
+			<menuitem id="menu_git_reset"
+					accesskey="r"
+					label="Git reset"
+					observes="Tasks:git_reset"
+					class="menu-iconic-wide" />
+			<menuitem id="menu_git_reset_hard"
+					accesskey="h"
+					label="Git reset hard"
+					observes="Tasks:git_reset_hard"
+					class="menu-iconic-wide" />
+			<menuitem id="menu_git_commit"
+					accesskey="c"
+					label="Git commit"
+					observes="Tasks:git_commit"
+					class="menu-iconic-wide" />
+			<menuitem id="menu_git_fetch"
+					accesskey="f"
+					label="Git fetch"
+					observes="Tasks:git_fetch"
+					class="menu-iconic-wide" />
+			<menuitem id="menu_git_pull"
+					accesskey="l"
+					label="Git pull"
+					observes="Tasks:git_pull"
+					class="menu-iconic-wide" />
+			<menuitem id="menu_git_pull_ext"
+					accesskey="l"
+					label="Git pull ..."
+					observes="Tasks:git_pull_ext"
+					class="menu-iconic-wide" />
+			<menuitem id="menu_git_push"
+					accesskey="p"
+					label="Git push"
+					observes="Tasks:git_push"
+					class="menu-iconic-wide" />
+			<menu id="menu_git_stash" accesskey="t" label="Stash">
+			<menupopup id="menu_git_push_popup">
+				<menuitem id="menu_git_stash_list"
+						accesskey="l"
+						label="Git stash list"
+						observes="Tasks:git_stash_list"
+						class="menu-iconic-wide" />
+				<menuitem id="menu_git_stash"
+						accesskey="s"
+						label="Git stash"
+						observes="Tasks:git_stash"
+						class="menu-iconic-wide" />
+				<menuitem id="menu_git_stash_pop"
+						accesskey="p"
+						label="Git stash pop"
+						observes="Tasks:git_stash_pop"
+						class="menu-iconic-wide" />
+				<menuitem id="menu_git_stash_drop"
+						accesskey="d"
+						label="Git stash drop"
+						observes="Tasks:git_stash_drop"
+						class="menu-iconic-wide" />
+			</menupopup>
+			</menu>
+			<menu id="menu_git_diff" accesskey="d" label="Diff">
+			<menupopup id="menu_git_diff_popup">
+				<menuitem id="menu_git_diff"
+						accesskey="d"
+						label="Git diff"
+						observes="Tasks:git_diff"
+						class="menu-iconic-wide" />
+				<menuitem id="menu_git_difftool"
+						accesskey="t"
+						label="Git difftool"
+						observes="Tasks:git_difftool"
+						class="menu-iconic-wide" />
+				<menuitem id="menu_git_diff_staged"
+						accesskey="s"
+						label="Git diff staged"
+						observes="Tasks:git_diff_staged"
+						class="menu-iconic-wide" />
+			</menupopup>
+			</menu>
+			<menu id="menu_git_merge" accesskey="m" label="Merge">
+			<menupopup id="menu_git_merge_popup">
+				<menuitem id="menu_git_merge"
+						accesskey="m"
+						label="Git merge"
+						observes="Tasks:git_merge"
+						class="menu-iconic-wide" />
+				<menuitem id="menu_git_mergetool"
+						accesskey="t"
+						label="Git mergetool"
+						observes="Tasks:git_mergetool"
+						class="menu-iconic-wide" />
+			</menupopup>
+			</menu>
+			<menu id="menu_git_remote" accesskey="o" label="Remote">
+			<menupopup id="menu_git_remote_popup">
+				<menuitem id="menu_git_remote_list"
+						accesskey="l"
+						label="Git list remotes"
+						observes="Tasks:git_remote_list"
+						class="menu-iconic-wide" />
+				<menuitem id="menu_git_remote_add"
+						accesskey="a"
+						label="Git add remote"
+						observes="Tasks:git_remote_add"
+						class="menu-iconic-wide" />
+				<menuitem id="menu_git_remote_remove"
+						accesskey="r"
+						label="Git remove remote"
+						observes="Tasks:git_remote_remove"
+						class="menu-iconic-wide" />
+				<menuitem id="menu_git_remote_rename"
+						accesskey="e"
+						label="Git rename remote"
+						observes="Tasks:git_remote_rename"
+						class="menu-iconic-wide" />
+				<menuitem id="menu_git_remote_set_url"
+						accesskey="s"
+						label="Git set url remote"
+						observes="Tasks:git_remote_set_url"
+						class="menu-iconic-wide" />
+			</menupopup>
+			</menu>
+			<menuitem id="menu_git_run_cmd"
+					accesskey="c"
+					label="run cmd"
+					observes="Tasks:git_run_cmd"
+					class="menu-iconic-wide" />
+			<menuitem id="menu_git_settings"
+					accesskey="t"
+					label="Git Settings"
+					observes="Tasks:git_settings"
+					class="menu-iconic-wide" />
+		</menupopup>
+		</menu>
+	</menupopup>
+	
+	<menupopup id="editorContextMenu">
+		<menu id="menu_git_komodo_editor_context_menu" insertbefore="editor_context_quick_bookmarks_menu" label="Git">
+			<menupopup id="menu_git_editor_context_menu_popup">
+			<menuitem id="menu_git_editor_context_menu_file_add"
+					label="Git add file"
+					observes="Tasks:git_add_file"
+					class="menu-iconic-wide" />
+			<menuitem id="menu_git_editor_context_menu_file_diff"
+					label="Git diff file"
+					observes="Tasks:git_diff_file"
+					class="menu-iconic-wide" />
+			<menuitem id="menu_git_editor_context_menu_file_revert"
+					label="Git revert changes in file"
+					observes="Tasks:git_reset_file"
+					class="menu-iconic-wide" />
+			</menupopup>
+		</menu>
+	</menupopup>
+</overlay>
+
+
+

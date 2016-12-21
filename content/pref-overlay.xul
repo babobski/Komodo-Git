@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="less://komodo/skin/global/global.less" type="text/css"?>
+<?xml-stylesheet href="less://komodo_git/skin/skin.less" type="text/css"?>
+
+<prefwindow id="komodo_git-prefs"
+	 title="Komodo Git Preferences"
+	 width="210"
+	 height="220"
+	 xmlns:html="http://www.w3.org/1999/xhtml"
+	 xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+	
+	<prefpane id="komodo_git-pane" label="Komodo Git Preferences">
+		<preferences>
+			<preference id="pref_showcommand" name="extensions.komodo_git.showOutput" type="bool"/>
+			<preference id="pref_autoHide" name="extensions.komodo_git.autoHide" type="bool"/>
+			<preference id="pref_gitDirectory" name="extensions.komodo_git.gitDirectory" type="string"/>
+		</preferences>
+		
+		
+		<vbox flex="1" style="padding: 5px;">
+			<hbox>
+				<label value="Show git command output:" style="padding-bottom: 5px;" />
+			</hbox>
+			<hbox>
+				<checkbox id="show-command-output" preference="pref_showcommand" checked="true" label="Show Command Output"/>
+			</hbox>
+			<hbox>
+				<spacer flex="1" height="10" />
+			</hbox>
+			<hbox>
+				<label value="Auto hide command output:" style="padding-bottom: 5px;" />
+			</hbox>
+			<hbox>
+				<checkbox id="auto-hide-command-output" preference="pref_autoHide" checked="true" label="Auto hide Command Output"/>
+			</hbox>
+			<hbox>
+				<spacer flex="1" height="10" />
+			</hbox>
+			<hbox>
+				<label value="Execute git command in directory:" style="padding-bottom: 5px;" />
+			</hbox>
+			<hbox>
+				<menulist id="gitDirectory" preference="pref_gitDirectory" label="Directory">
+					<menupopup>
+						<menuitem value="currentProject" label="Current project root"/>
+						<menuitem value="placesRoot" label="Places Root"/>
+					</menupopup>
+				</menulist>
+			</hbox>
+		</vbox>
+	</prefpane>
+
+</prefwindow>
+

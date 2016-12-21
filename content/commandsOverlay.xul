@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<!DOCTYPE overlay PUBLIC "-//MOZILLA//DTD XUL V1.0//EN" "http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+
+<overlay id="gitKomodoCommandOverlay"
+		 xmlns:html="http://www.w3.org/1999/xhtml"
+		 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+		 xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+		 
+	 <broadcasterset id="broadcasterset_global">
+		<broadcaster
+		id="cmd_git_status"
+		key="key_cmd_git_status"
+		desc="Git: Git status"
+		oncommand="extensions.komodo_git.gitStatus();"/>
+		<broadcaster
+		id="cmd_git_add"
+		key="key_cmd_git_add"
+		desc="Git: Git add"
+		oncommand="extensions.komodo_git.gitAdd();"/>
+		<broadcaster
+		id="cmd_git_reset"
+		key="key_cmd_git_reset"
+		desc="Git: Git reset"
+		oncommand="extensions.komodo_git.gitReset();"/>
+		<broadcaster
+		id="cmd_git_commit"
+		key="key_cmd_git_commit"
+		desc="Git: Git commit"
+		oncommand="extensions.komodo_git.gitCommit();"/>
+		<broadcaster
+		id="cmd_git_fetch"
+		key="key_cmd_git_fetch"
+		desc="Git: Git fetch"
+		oncommand="extensions.komodo_git.gitFetch();"/>
+		<broadcaster
+		id="cmd_git_pull"
+		key="key_cmd_git_pull"
+		desc="Git: Git pull"
+		oncommand="extensions.komodo_git.gitPullExt();"/>
+		<broadcaster
+		id="cmd_git_push"
+		key="key_cmd_git_push"
+		desc="Git: Git push"
+		oncommand="extensions.komodo_git.gitPush();"/>
+		<broadcaster
+		id="cmd_git_diff"
+		key="key_cmd_git_diff"
+		desc="Git: Git diff"
+		oncommand="extensions.komodo_git.gitDiff();"/>
+		<broadcaster
+		id="cmd_git_difftool"
+		key="key_cmd_git_difftool"
+		desc="Git: Git difftool"
+		oncommand="extensions.komodo_git.gitDiffTool();"/>
+		<broadcaster
+		id="cmd_git_merge"
+		key="key_cmd_git_merge"
+		desc="Git: Git merge"
+		oncommand="extensions.komodo_git.gitMerge();"/>
+		<broadcaster
+		id="cmd_git_mergetool"
+		key="key_cmd_git_mergetool"
+		desc="Git: Git mergetool"
+		oncommand="extensions.komodo_git.gitMergeTool();"/>
+		<broadcaster
+		id="cmd_git_run_cmd"
+		key="key_cmd_git_run_cmd"
+		desc="Git: Run cmd"
+		oncommand="extensions.komodo_git.runCMD();"/>
+	 </broadcasterset>
+
+</overlay> 
+ 
+

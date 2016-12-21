@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="less://komodo/skin/global/global.less" type="text/css"?>
+<overlay id="gitPlacesOverlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+	<script type="application/x-javascript" src="chrome://komodo_git/content/overlay.js" />
+	
+	
+	<menupopup id="tabContextMenu">
+		<menu id="menu_git_komodo_tab_context_menu" insertafter="morekomodo-delete" label="Git">
+			<menupopup id="menu_git_tab_context_menu_popup">
+			<menuitem id="menu_git_tab_context_menu_file_add"
+					label="Git add file"
+					observes="Tasks:git_add_file"
+					class="menu-iconic-wide" />
+			<menuitem id="menu_git_tab_context_menu_file_diff"
+					label="Git diff file"
+					observes="Tasks:git_diff_file"
+					class="menu-iconic-wide" />
+			<menuitem id="menu_git_tab_context_menu_file_revert"
+					label="Git revert changes in file"
+					observes="Tasks:git_reset_file"
+					class="menu-iconic-wide" />
+			</menupopup>
+		</menu>
+	</menupopup>
+</overlay>
+
