@@ -235,7 +235,7 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 		if (koDoc === null) {
 			return false;
 		}
-		command = 'diff HEAD^ ' + koDoc.displayPath;
+		command = 'diff HEAD~1 ' + koDoc.displayPath;
 		
 		if (command !== null) {
 			self._runOutput(command, true, false, true);
@@ -287,7 +287,7 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 			case 'folder':
 				var file = item.file;
 				if (file !== null) {
-					command = 'diff HEAD^^ ' + file.displayPath;
+					command = 'diff HEAD~1 ' + file.displayPath;
 				}
 				break;
 		}
