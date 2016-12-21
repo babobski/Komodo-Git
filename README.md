@@ -1,3 +1,5 @@
+[logo](Komodo-Git.png)
+
 # Komodo Git
 Control you're git repo's inside komodo.  
 Execute git commands with just a few mouse-clicks or key-commands.
