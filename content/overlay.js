@@ -3,7 +3,7 @@
  */
 if (typeof(extensions) === 'undefined') extensions = {};
 if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
-	version: '1.1'
+	version: '1.1.1'
 };
 
 (function() {
@@ -432,7 +432,6 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 		
 		var defaultToolbar = $('#standard-toolbaritem2');
 		var gitButton = $('<toolbarbutton id="gitButton" flex="1" class="git-icon" orient="horizontal" type="menu-button" persist="buttonstyle" buttonstyle="pictures" label="git" />'),
-			gitToolbar = $('<toolbar id="gitToolbar" mode="icons" tooltiptext="Git" buttonstyle="pictures"/>'),
 			gitMenu = $('<menupopup id="gitMenu" />'),
 			btnGitStatus = $('<menuitem label="Git Status"	oncommand="extensions.komodo_git.gitStatus();"/>'),
 			btnGitAdd = $('<menuitem label="Git Add"	oncommand="extensions.komodo_git.gitAdd();"/>'),
@@ -514,9 +513,8 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 		gitMenu.append(btnSettings);
 		
 		gitButton.append(gitMenu);
-		gitToolbar.append(gitButton);
 		if (defaultToolbar.length > 0) {
-			defaultToolbar.after(gitToolbar);
+			defaultToolbar.append(gitButton);
 			fails = 0;
 		} else if(fails < 10) {
 			fails++;
