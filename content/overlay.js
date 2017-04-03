@@ -3,7 +3,7 @@
  */
 if (typeof(extensions) === 'undefined') extensions = {};
 if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
-	version: '1.1.1'
+	version: '1.1.2'
 };
 
 (function() {
@@ -24,6 +24,14 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 
 		self._runOutput(command, true);
 
+	}
+	
+	this.gitInit = function() {
+		var command = 'init',
+			showOutput = prefs.getBoolPref('showOutput'),
+			callback = showOutput ? 'status' : false;
+
+		self._runOutput(command, false, callback);
 	}
 
 	this.gitAdd = function() {
@@ -395,9 +403,15 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 	}
 	
 	this.runCMD = function(){
+		var currentProject = ko.projects.manager.currentProject;
+		var placesManger = ko.places.manager;
+		var directory = ko.uriparse.displayPath(placesManger.currentPlace);
 		ko.run.output.kill();
+		if (currentProject !== null && prefs.getCharPref('gitDirectory') === 'currentProject') {
+			directory = ko.interpolate.interpolateString('%i');
+		} 
 		setTimeout(function(){
-			ko.run.command('cmd /K "cd ' + ko.interpolate.interpolateString('%i'), {});
+			ko.run.command('cmd /K "cd ' + directory, {});
 		}, 30);
 	}
 
@@ -434,6 +448,7 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 		var gitButton = $('<toolbarbutton id="gitButton" flex="1" class="git-icon" orient="horizontal" type="menu-button" persist="buttonstyle" buttonstyle="pictures" label="git" />'),
 			gitMenu = $('<menupopup id="gitMenu" />'),
 			btnGitStatus = $('<menuitem label="Git Status"	oncommand="extensions.komodo_git.gitStatus();"/>'),
+			btnGitInit = $('<menuitem label="Git Init"	oncommand="extensions.komodo_git.gitInit();"/>'),
 			btnGitAdd = $('<menuitem label="Git Add"	oncommand="extensions.komodo_git.gitAdd();"/>'),
 			btnGitReset = $('<menuitem label="Git Reset"	oncommand="extensions.komodo_git.gitReset();"/>'),
 			btnGitResetHard = $('<menuitem label="Git Reset hard"	oncommand="extensions.komodo_git.gitResetHard();"/>'),
@@ -471,6 +486,7 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 			
 			
 		gitMenu.append(btnGitStatus);
+		gitMenu.append(btnGitInit);
 		gitMenu.append(btnGitAdd);
 		gitMenu.append(btnGitReset);
 		gitMenu.append(btnGitResetHard);
