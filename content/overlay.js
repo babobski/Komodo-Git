@@ -382,7 +382,8 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 						console.log(e);
 					}
 				} else {
-					if (stdout.length > 0) { 
+					if (stdout.length > 0) {
+						console.log(stderr);
 						ko.uilayout.toggleTab('git-console-widget', false);
 						try {
 						obs.notifyObservers({

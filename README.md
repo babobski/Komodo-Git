@@ -2,7 +2,7 @@
 
 # Komodo Git
 Control you're git repo's inside komodo.  
-Execute git commands with just a few mouse-clicks or key-commands.
+Execute git commands with just a few mouse-clicks or keyboard-commands away.
 
 ## Available Commands
 The following Commands are available trough the addon.
