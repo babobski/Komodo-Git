@@ -6,28 +6,23 @@
 <prefwindow id="komodo_git-prefs"
 	 title="Komodo Git Preferences"
 	 width="210"
-	 height="220"
+	 height="180"
+	 hidechrome="true"
 	 xmlns:html="http://www.w3.org/1999/xhtml"
 	 xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 	
 	<prefpane id="komodo_git-pane" label="Komodo Git Preferences">
 		<preferences>
-			<preference id="pref_showcommand" name="extensions.komodo_git.showOutput" type="bool"/>
 			<preference id="pref_autoHide" name="extensions.komodo_git.autoHide" type="bool"/>
 			<preference id="pref_gitDirectory" name="extensions.komodo_git.gitDirectory" type="string"/>
 		</preferences>
 		
-		
+		<titlebar id="gitTitleBar" height="30" width="100%"  style="background: transparent;">
+			<label flex="1" style="text-align: center; padding: 7px 0; pointer-events: none;">
+				Komodo Git - Preferences
+			</label>
+		</titlebar>
 		<vbox flex="1" style="padding: 5px;">
-			<hbox>
-				<label value="Show git command output:" style="padding-bottom: 5px;" />
-			</hbox>
-			<hbox>
-				<checkbox id="show-command-output" preference="pref_showcommand" checked="true" label="Show Command Output"/>
-			</hbox>
-			<hbox>
-				<spacer flex="1" height="10" />
-			</hbox>
 			<hbox>
 				<label value="Auto hide command output:" style="padding-bottom: 5px;" />
 			</hbox>

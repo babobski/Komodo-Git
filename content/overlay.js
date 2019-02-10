@@ -8,59 +8,57 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 
 (function() {
 
-	var $ = require("ko/dom"),
-		notify = require("notify/notify"),
-		fails = 0,
-		self = this,
-		uriParse = ko.uriparse,
+	var $ 				= require("ko/dom"),
+		notify 			= require("notify/notify"),
+		shell			= require("ko/shell"),
+		fails 			= 0,
+		self 			= this,
+		uriParse 		= ko.uriparse,
+		obs 			= Components.classes["@mozilla.org/observer-service;1"]
+						.getService(Components.interfaces.nsIObserverService),
 		hidingOutput,
-		prefs = Components.classes["@mozilla.org/preferences-service;1"]
-		.getService(Components.interfaces.nsIPrefService).getBranch("extensions.komodo_git.");
+		prefs 			= Components.classes["@mozilla.org/preferences-service;1"]
+						.getService(Components.interfaces.nsIPrefService).getBranch("extensions.komodo_git.");
 		
 	window.removeEventListener('komodo-post-startup', self.addGitButton);
 
-	this.gitStatus = function() {
+	this.gitStatus = () => {
 		var command = 'status';
 
 		self._runOutput(command, true);
 
 	}
 	
-	this.gitInit = function() {
+	this.gitInit = () => {
 		var command = 'init',
-			showOutput = prefs.getBoolPref('showOutput'),
-			callback = showOutput ? 'status' : false;
+			callback = 'status';
 
-		self._runOutput(command, false, callback);
+		self._runOutput(command, callback);
 	}
 
-	this.gitAdd = function() {
+	this.gitAdd = () => {
 		var command = 'add -A',
-			showOutput = prefs.getBoolPref('showOutput'),
-			callback = showOutput ? 'status' : false;
+			callback = 'status';
 
-		self._runOutput(command, false, callback);
+		self._runOutput(command, callback);
 	}
 	
-	this.gitReset = function() {
+	this.gitReset = () => {
 		var command = 'reset',
-			showOutput = prefs.getBoolPref('showOutput'),
-			callback = showOutput ? 'status' : false;
+			callback = 'status';
 
-		self._runOutput(command, false, callback);
+		self._runOutput(command, callback);
 	}
 	
-	this.gitResetHard = function() {
+	this.gitResetHard = () => {
 		var command = 'reset --hard',
-			showOutput = prefs.getBoolPref('showOutput'),
-			callback = showOutput ? 'status' : false;
+			callback = 'status';
 
-		self._runOutput(command, false, callback);
+		self._runOutput(command, callback);
 	}
 
-	this.gitCommit = function() {
-		var message = ko.interpolate.interpolateString('%(ask:commit message)'),
-			showOutput = prefs.getBoolPref('showOutput');
+	this.gitCommit = () => {
+		var message = ko.interpolate.interpolateString('%(ask:commit message)');
 
 		if (message === null) {
 			return false;
@@ -68,28 +66,25 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 
 		var command = 'commit -m "' + message + '"';
 
-		self._runOutput(command, showOutput);
+		self._runOutput(command);
 
 	}
 
-	this.gitFetch = function() {
+	this.gitFetch = () => {
 		var command = 'fetch',
-			showOutput = prefs.getBoolPref('showOutput'),
-			callback = showOutput ? 'status' : false;
+			callback = 'status';
 
-		self._runOutput(command, false, callback);
+		self._runOutput(command, callback);
 	}
 
-	this.gitPull = function() {
-		var command = 'pull',
-			showOutput = prefs.getBoolPref('showOutput');
+	this.gitPull = () => {
+		var command = 'pull';
 
-		self._runOutput(command, showOutput);
+		self._runOutput(command);
 	}
 	
-	this.gitPullExt = function() {
-		var message = ko.interpolate.interpolateString('%(ask:Push:origin master)'),
-			showOutput = prefs.getBoolPref('showOutput');
+	this.gitPullExt = () => {
+		var message = ko.interpolate.interpolateString('%(ask:Push:origin master)');
 
 		if (message === null) {
 			return false;
@@ -97,10 +92,10 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 		
 		var command = 'pull ' + message;
 
-		self._runOutput(command, showOutput);
+		self._runOutput(command);
 	}
 
-	this.gitPush = function() {
+	this.gitPush = () => {
 		var message = ko.interpolate.interpolateString('%(ask:Push:origin master)');
 
 		if (message === null) {
@@ -110,70 +105,70 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 		var command = 'push ' + message;
 
 
-		self._runOutput(command, true);
+		self._runOutput(command);
 	}
 
-	this.gitStash = function() {
+	this.gitStash = () => {
 		var command = 'stash';
 
-		self._runOutput(command, true);
+		self._runOutput(command);
 	}
 
-	this.gitStashPop = function() {
+	this.gitStashPop = () => {
 		var command = 'stash pop';
 
-		self._runOutput(command, true);
+		self._runOutput(command);
 	}
 
-	this.gitStashList = function() {
+	this.gitStashList = () => {
 		var command = 'stash list';
 
-		self._runOutput(command, true);
+		self._runOutput(command);
 	}
 
-	this.gitStashDrop = function() {
+	this.gitStashDrop = () => {
 		var command = 'stash drop';
 
-		self._runOutput(command, true);
+		self._runOutput(command);
 	}
 
-	this.gitDiff = function() {
+	this.gitDiff = () => {
 		var command = 'diff';
 
-		self._runOutput(command, true, false, true);
+		self._runOutput(command, false, true);
 	}
 
-	this.gitDiffTool = function() {
+	this.gitDiffTool = () => {
 		var command = 'difftool';
 
-		self._runOutput(command, true, false, true);
+		self._runOutput(command, false, true);
 	}
 
-	this.gitDiffStaged = function() {
+	this.gitDiffStaged = () => {
 		var command = 'diff --staged';
 
-		self._runOutput(command, true, false, true);
+		self._runOutput(command, false, true);
 	}
 
-	this.gitMerge = function() {
+	this.gitMerge = () => {
 		var command = 'merge';
 
-		self._runOutput(command, true, false, true);
+		self._runOutput(command, false, true);
 	}
 
-	this.gitMergeTool = function() {
+	this.gitMergeTool = () => {
 		var command = 'mergetool';
 
-		self._runOutput(command, true, false, true);
+		self._runOutput(command, false, true);
 	}
 
-	this.gitRemoteList = function() {
+	this.gitRemoteList = () => {
 		var command = 'remote -v';
 
 		self._runOutput(command, true, false);
 	}
 	
-	this.gitRemoteAdd = function() {
+	this.gitRemoteAdd = () => {
 		var remote = ko.interpolate.interpolateString('%(ask:remote:name url)');
 
 		if (remote === null) {
@@ -182,10 +177,10 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 
 		var command = 'remote add ' + remote;
 
-		self._runOutput(command, false, 'listRemotes');
+		self._runOutput(command, 'listRemotes');
 	}
 
-	this.gitRemoteRemove = function() {
+	this.gitRemoteRemove = () => {
 		var remote = ko.interpolate.interpolateString('%(ask:remote:name)');
 
 		if (remote === null) {
@@ -194,10 +189,10 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 
 		var command = 'remote remove ' + remote;
 
-		self._runOutput(command, false, 'listRemotes');
+		self._runOutput(command, 'listRemotes');
 	}
 
-	this.gitRemoteRename = function() {
+	this.gitRemoteRename = () => {
 		var rename = ko.interpolate.interpolateString('%(ask:rename:[old name] [new name])');
 
 		if (rename === null) {
@@ -206,10 +201,10 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 
 		var command = 'remote rename ' + rename;
 
-		self._runOutput(command, false, 'listRemotes');
+		self._runOutput(command, 'listRemotes');
 	}
 
-	this.gitRemoteSetUrl = function() {
+	this.gitRemoteSetUrl = () => {
 		var url = ko.interpolate.interpolateString('%(ask:remote:Name url)');
 
 		if (url === null) {
@@ -218,10 +213,10 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 
 		var command = 'remote set-url ' + url;
 
-		self._runOutput(command, false, 'listRemotes');
+		self._runOutput(command, 'listRemotes');
 	}
 
-	this.gitAddFile = function() {
+	this.gitAddFile = () => {
 		var command = null;
 		var koDoc = ko.views.manager.currentView.koDoc;
 		
@@ -231,12 +226,12 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 		command = 'add ' + koDoc.displayPath;
 			
 		if (command !== null) {
-			self._runOutput(command, false, 'status');
+			self._runOutput(command, 'status');
 		}
 		return false;
 	}
 	
-	this.gitDiffFile = function() {
+	this.gitDiffFile = () => {
 		var command = null;
 		var koDoc = ko.views.manager.currentView.koDoc;
 		
@@ -246,12 +241,12 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 		command = 'diff HEAD~1 ' + koDoc.displayPath;
 		
 		if (command !== null) {
-			self._runOutput(command, true, false, true);
+			self._runOutput(command, false, true);
 		}
 		return false;
 	}
 	
-	this.gitResetFile = function() {
+	this.gitResetFile = () => {
 		var command = null;
 		var koDoc = ko.views.manager.currentView.koDoc;
 		
@@ -261,13 +256,13 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 		command = 'checkout ' + koDoc.displayPath;
 			
 		if (command !== null) {
-			self._runOutput(command, false, 'status');
+			self._runOutput(command, 'status');
 		}
 		
 		return false;
 	}
 	
-	this.gitAddFilePlaces = function() {
+	this.gitAddFilePlaces = () => {
 		var command = null;
 		var item = ko.places.manager.getSelectedItem();
 		switch (item.type) {
@@ -281,13 +276,13 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 		}
 		
 		if (command !== null) {
-			self._runOutput(command, false, 'status');
+			self._runOutput(command, 'status');
 		}
 		
 		return false;
 	}
 	
-	this.gitDiffFilePlaces = function() {
+	this.gitDiffFilePlaces = () => {
 		var command = null;
 		var item = ko.places.manager.getSelectedItem();
 		switch (item.type) {
@@ -301,13 +296,13 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 		}
 		
 		if (command !== null) {
-			self._runOutput(command, true, false, true);
+			self._runOutput(command, false, true);
 		}
 		
 		return false;
 	}
 	
-	this.gitResetFilePlaces = function() {
+	this.gitResetFilePlaces = () => {
 		var command = null;
 		var item = ko.places.manager.getSelectedItem();
 		switch (item.type) {
@@ -321,16 +316,15 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 		}
 		
 		if (command !== null) {
-			self._runOutput(command, false, 'status');
+			self._runOutput(command, 'status');
 		}
 		
 		return false;
 	}
 	
 
-	this._runOutput = function(command, output, callback, forceOutput) {
+	this._runOutput = (command, callback, forceOutput) => {
 		command = command || false;
-		output = output || false;
 		callback = callback || false;
 		forceOutput = forceOutput || false;
 		
@@ -338,10 +332,6 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 		var gitUrl = prefs.getCharPref('gitDirectory'),
 			autoHide = prefs.getBoolPref('autoHide'),
 			timeOut = 4200;
-		
-		if (/push\s/.test(command) || /pull\s/.test(command)) {
-			timeOut = 8000;
-		}
 		
 		if (gitUrl === 'currentProject') {
 			var currentProject = ko.projects.manager.currentProject;
@@ -370,39 +360,62 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 		clearTimeout(hidingOutput);
 
 		var run = 'git -C "' + path + '" ' + command;
-
-		ko.run.output.kill();
-		setTimeout(function() {
-			ko.run.command(run, {
-				"runIn": (output ? 'command-output-window' : 'no-console'),
-				"openOutputWindow": output,
-			});
-			
-			if (!callback && output) {
-				setTimeout(function(){
-					$("#runoutput-desc-tabpanel").focus();
-				}, 500);
-			} else if(!callback && !output) {
-				self.hideBottomPane();
+		
+		shell.exec(
+			run,
+			 {
+				"runIn": 'command-output-window',
+				"openOutputWindow": false,
+			},
+			function(error, stdout, stderr) {
+				if (error !== null) {
+					ko.uilayout.toggleTab('git-console-widget', false);
+					try {
+						obs.notifyObservers({
+							wrappedJSObject: {
+								level: "error",
+								arguments: [ stderr ],
+							},
+						},
+						'git-console-log-event', null);	
+					} catch(e) {
+						console.log(e);
+					}
+				} else {
+					if (stdout.length > 0) { 
+						ko.uilayout.toggleTab('git-console-widget', false);
+						try {
+						obs.notifyObservers({
+								wrappedJSObject: {
+									level: "debug",
+									arguments: [ stdout ],
+								},
+							},
+							'git-console-log-event', null);	
+						} catch(e) {
+							console.log(e);
+						}
+					}
+					if (callback) {
+						self.runCallback(callback);
+					}
+				}
+				if (autoHide && !forceOutput) {
+					hidingOutput = setTimeout(function(){
+						self.hideBottomPane();
+					}, timeOut);
+				}
 			}
-			
-			if (autoHide && !forceOutput) {
-				hidingOutput = setTimeout(function(){
-					self.hideBottomPane();
-				}, timeOut);
-			}
-
-			self.runCallback(callback);
-		}, 10);
+		);
 	}
 	
-	this.hideBottomPane = function(){
+	this.hideBottomPane = () => {
 		if (ko.uilayout.isPaneShown('workspace_bottom_area')) {
 			ko.uilayout.togglePane('workspace_bottom_area');
 		}
 	}
 	
-	this.runCMD = function(){
+	this.runCMD = () => {
 		var currentProject = ko.projects.manager.currentProject;
 		var placesManger = ko.places.manager;
 		var directory = ko.uriparse.displayPath(placesManger.currentPlace);
@@ -415,7 +428,7 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 		}, 30);
 	}
 
-	this.runCallback = function(callback) {
+	this.runCallback = (callback) => {
 		if (callback) {
 			setTimeout(function() {
 				switch (callback) {
@@ -430,119 +443,243 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 		}
 	}
 
-	this.isRemote = function(url) {
+	this.isRemote = (url) => {
 		return /(^ftp|^sftp|^ssh)/.test(url);
 	}
 	
 	var features = "chrome,titlebar,toolbar,centerscreen";
-	this.OpenSettings = function() {
+	this.OpenSettings = () => {
 		window.openDialog('chrome://komodo_git/content/pref-overlay.xul', "gitSettings", features);
 	}
 	
-	this.addGitButton = function(){
-		if ($('#gitToolbar').length > 0) {
-			$('#gitToolbar').remove();
-		}
+	this._addDynamicToolbarButton = () => {
+		const db = require('ko/dynamic-button');
+
+		const view = () => {
+			return ko.views.manager.currentView && ko.views.manager.currentView.title !== "New Tab";
+		};
 		
-		var defaultToolbar = $('#standard-toolbaritem2');
-		var gitButton = $('<toolbarbutton id="gitButton" flex="1" class="git-icon" orient="horizontal" type="menu-button" persist="buttonstyle" buttonstyle="pictures" label="git" />'),
-			gitMenu = $('<menupopup id="gitMenu" />'),
-			btnGitStatus = $('<menuitem label="Git Status"	oncommand="extensions.komodo_git.gitStatus();"/>'),
-			btnGitInit = $('<menuitem label="Git Init"	oncommand="extensions.komodo_git.gitInit();"/>'),
-			btnGitAdd = $('<menuitem label="Git Add"	oncommand="extensions.komodo_git.gitAdd();"/>'),
-			btnGitReset = $('<menuitem label="Git Reset"	oncommand="extensions.komodo_git.gitReset();"/>'),
-			btnGitResetHard = $('<menuitem label="Git Reset hard"	oncommand="extensions.komodo_git.gitResetHard();"/>'),
-			btnGitCommit = $('<menuitem label="Git Commit"	oncommand="extensions.komodo_git.gitCommit();"/>'),
-			btnGitFetch = $('<menuitem label="Git Fetch"	oncommand="extensions.komodo_git.gitFetch();"/>'),
-			btnGitPull = $('<menuitem label="Git Pull"	oncommand="extensions.komodo_git.gitPullExt();"/>'),
-			btnGitPush = $('<menuitem label="Git Push"	oncommand="extensions.komodo_git.gitPush();"/>'),
-			btnGitStash = $('<menuitem label="Git Stash"	oncommand="extensions.komodo_git.gitStash();"/>'),
-			btnGitStashPop = $('<menuitem label="Git Stash pop"	oncommand="extensions.komodo_git.gitStashPop();"/>'),
-			btnGitStashList = $('<menuitem label="Git Stash list"	oncommand="extensions.komodo_git.gitStashList();"/>'),
-			btnGitStashDrop = $('<menuitem label="Git Stash drop"	oncommand="extensions.komodo_git.gitStashDrop();"/>'),
-			btnGitDiff = $('<menuitem label="Git Diff"	oncommand="extensions.komodo_git.gitDiff();"/>'),
-			btnGitDiffTool = $('<menuitem label="Git Difftool"	oncommand="extensions.komodo_git.gitDiffTool();"/>'),
-			btnGitDiffStaged = $('<menuitem label="Git Diff staged"	oncommand="extensions.komodo_git.gitDiffStaged();"/>'),
-			btnGitMerge = $('<menuitem label="Git Merge"	oncommand="extensions.komodo_git.gitMerge();"/>'),
-			btnGitMergeTool = $('<menuitem label="Git Mergetool"	oncommand="extensions.komodo_git.gitMergeTool();"/>'),
-			btnGitRemoteList = $('<menuitem label="Git Remote list"	oncommand="extensions.komodo_git.gitRemoteList();"/>'),
-			btnGitRemoteAdd = $('<menuitem label="Git Remote add"	oncommand="extensions.komodo_git.gitRemoteAdd();"/>'),
-			btnGitRemoteRemove = $('<menuitem label="Git Remote remove"	oncommand="extensions.komodo_git.gitRemoteRemove();"/>'),
-			btnGitRemoteRename = $('<menuitem label="Git Remote rename"	oncommand="extensions.komodo_git.gitRemoteRename();"/>'),
-			btnGitRemoteSetUrl = $('<menuitem label="Git Remote set url"	oncommand="extensions.komodo_git.gitRemoteSetUrl();"/>'),
-			btnGitAddFile = $('<menuitem label="Git Add file"	oncommand="extensions.komodo_git.gitAddFile();"/>'),
-			btnGitDiffFile = $('<menuitem label="Git Diff file"	oncommand="extensions.komodo_git.gitDiffFile();"/>'),
-			btnGitResetFile = $('<menuitem label="Git Reset file"	oncommand="extensions.komodo_git.gitResetFile();"/>'),
-			btnGitRunCmd = $('<menuitem label="Run CMD"	oncommand="extensions.komodo_git.runCMD();"/>'),
-			btnSettings = $('<menuitem label="Settings"	oncommand="extensions.komodo_git.OpenSettings();"/>'),
-			stashMenu = $('<menu label="Git Stash" />'),
-			stashPop = $('<menupopup />'),
-			diffMenu = $('<menu label="Git Diff" />'),
-			diffPop = $('<menupopup />'),
-			mergeMenu = $('<menu label="Git Merge" />'),
-			mergePop = $('<menupopup />'),
-			remoteMenu = $('<menu label="Git Remote" />'),
-			remotePop = $('<menupopup />');
-			
-			
-		gitMenu.append(btnGitStatus);
-		gitMenu.append(btnGitInit);
-		gitMenu.append(btnGitAdd);
-		gitMenu.append(btnGitReset);
-		gitMenu.append(btnGitResetHard);
-		gitMenu.append(btnGitCommit);
-		gitMenu.append(btnGitFetch);
-		gitMenu.append(btnGitPull);
-		gitMenu.append(btnGitPush);
-		
-		stashPop.append(btnGitStash);
-		stashPop.append(btnGitStashList);
-		stashPop.append(btnGitStashPop);
-		stashPop.append(btnGitStashDrop);
-		stashMenu.append(stashPop);
-		
-		gitMenu.append(stashMenu);
-		
-		diffPop.append(btnGitDiff);
-		diffPop.append(btnGitDiffTool);
-		diffPop.append(btnGitDiffStaged);
-		diffMenu.append(diffPop);
-		
-		gitMenu.append(diffMenu);
-		
-		mergePop.append(btnGitMerge);
-		mergePop.append(btnGitMergeTool);
-		mergeMenu.append(mergePop);
-		
-		gitMenu.append(mergeMenu);
-		
-		remotePop.append(btnGitRemoteList);
-		remotePop.append(btnGitRemoteAdd);
-		remotePop.append(btnGitRemoteRemove);
-		remotePop.append(btnGitRemoteRename);
-		remotePop.append(btnGitRemoteSetUrl);
-		remoteMenu.append(remotePop);
-		
-		gitMenu.append(remoteMenu);
-		
-		gitMenu.append(btnGitRunCmd);
-		gitMenu.append(btnSettings);
-		
-		gitButton.append(gitMenu);
-		if (defaultToolbar.length > 0) {
-			defaultToolbar.append(gitButton);
-			fails = 0;
-		} else if(fails < 10) {
-			fails++;
-			setTimeout(function(){
-				self.addGitButton();
-			}, 1000);
-		}
-		
-		return false;
-	}
-	
-	window.addEventListener('komodo-post-startup', self.addGitButton);
+		const button = db.register({
+			label: "Komodo Git",
+			tooltip: "Komodo Git",
+			icon: "scc",
+			events: [
+				"current_view_changed",
+			],
+			menuitems: [
+				{
+					label: "Git Status",
+					name: "git_status",
+					command: () => {
+						extensions.komodo_git.gitStatus();
+					}
+				},
+				{
+					label: "Git Init",
+					name: "git_init",
+					command: () => {
+						extensions.komodo_git.gitInit();
+					}
+				},
+				{
+					label: "Git Add",
+					name: "git_add",
+					command: () => {
+						extensions.komodo_git.gitAdd();
+					}
+				},
+				{
+					label: "Git Reset",
+					name: "git_reset",
+					command: () => {
+						extensions.komodo_git.gitReset();
+					}
+				},
+				{
+					label: "Git Reset hard",
+					name: "git_reset_hard",
+					command: () => {
+						extensions.komodo_git.gitResetHard();
+					}
+				},
+				{
+					label: "Git Commit",
+					name: "git_commit",
+					command: () => {
+						extensions.komodo_git.gitCommit();
+					}
+				},
+				{
+					label: "Git Fetch",
+					name: "git_fetch",
+					command: () => {
+						extensions.komodo_git.gitFetch();
+					},
+				},
+				{
+					label: "Git Pull",
+					name: "git_pull",
+					command: () => {
+						extensions.komodo_git.gitPullExt();
+					},
+				},
+				{
+					label: "Git Push",
+					name: "git_push",
+					command: () => {
+						extensions.komodo_git.gitPush();
+					},
+				},
+				{
+					label: "Git Stash",
+					name: "git_stash",
+					menuitems: [
+						{
+							label: "Git Stash",
+							name: "git_stash",
+							command: () => {
+								extensions.komodo_git.gitStash();
+							},
+						},
+						{
+							label: "Git Stash Pop",
+							name: "git_stash_pop",
+							command: () => {
+								extensions.komodo_git.gitStashPop();
+							},
+						},
+						{
+							label: "Git Stash List",
+							name: "git_stash_list",
+							command: () => {
+								extensions.komodo_git.gitStashList();
+							},
+						},
+						{
+							label: "Git Stash Drop",
+							name: "git_stash_drop",
+							command: () => {
+								extensions.komodo_git.gitStashDrop();
+							},
+						},
+					]
+				},
+				{
+					label: "Git Diff",
+					name: "git_diff",
+					menuitems: [
+						{
+							label: "Git Diff",
+							name: "git_diff",
+							command: () => {
+								extensions.komodo_git.gitDiff();
+							},
+						},
+						{
+							label: "Git Difftool",
+							name: "git_difftool",
+							command: () => {
+								extensions.komodo_git.gitDiffTool();
+							},
+						},
+						{
+							label: "Git Diff Staged",
+							name: "git_diff_staged",
+							command: () => {
+								extensions.komodo_git.gitDiffStaged();
+							},
+						},
+					]
+				},
+				{
+					label: "Git Merge",
+					name: "git_merge",
+					menuitems: [
+						{
+							label: "Git Merge",
+							name: "git_merge",
+							command: () => {
+								extensions.komodo_git.gitMerge();
+							},
+						},
+						{
+							label: "Git Mergetool",
+							name: "git_mergetool",
+							command: () => {
+								extensions.komodo_git.gitMergeTool();
+							},
+						},
+						{
+							label: "Git Diff Staged",
+							name: "git_diff_staged",
+							command: () => {
+								extensions.komodo_git.gitDiffStaged();
+							},
+						},
+					]
+				},
+				{
+					label: "Git Remote",
+					name: "git_remote",
+					menuitems: [
+						{
+							label: "Git Remote List",
+							name: "git_remote_list",
+							command: () => {
+								extensions.komodo_git.gitRemoteList();
+							},
+						},
+						{
+							label: "Git Remote add",
+							name: "git_remote_add",
+							command: () => {
+								extensions.komodo_git.gitRemoteAdd();
+							},
+						},
+						{
+							label: "Git Remote Remove",
+							name: "git_remote_remove",
+							command: () => {
+								extensions.komodo_git.gitDiffStaged();
+							},
+						},
+						{
+							label: "Git Remote Rename",
+							name: "git_remote_rename",
+							command: () => {
+								extensions.komodo_git.gitRemoteRename();
+							},
+						},
+						{
+							label: "Git Remote Set Url",
+							name: "git_remote_set_url",
+							command: () => {
+								extensions.komodo_git.gitRemoteSetUrl();
+							},
+						},
+					]
+				},
+				{
+					label: "Run CMD",
+					name: "run_cmd",
+					command: () => {
+						extensions.komodo_git.runCMD();
+					},
+				},
+				{
+					label: "Settings",
+					name: "git-settings",
+					command: () => {
+						extensions.komodo_git.OpenSettings();
+					}
+				},
+			],
+			isEnabled: () => {
+				return view();
+			},
+		});
+	};
+	self._addDynamicToolbarButton();
 	
 }).apply(extensions.komodo_git);
 
