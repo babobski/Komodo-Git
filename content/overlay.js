@@ -3,15 +3,13 @@
  */
 if (typeof(extensions) === 'undefined') extensions = {};
 if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
-	version: '1.1.2'
+	version: '2.0.0'
 };
 
 (function() {
 
-	var $ 				= require("ko/dom"),
-		notify 			= require("notify/notify"),
+	var notify 			= require("notify/notify"),
 		shell			= require("ko/shell"),
-		fails 			= 0,
 		self 			= this,
 		uriParse 		= ko.uriparse,
 		obs 			= Components.classes["@mozilla.org/observer-service;1"]
