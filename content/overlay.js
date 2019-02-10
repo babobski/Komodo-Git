@@ -382,7 +382,6 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 						console.log(e);
 					}
 				} else {
-					console.log(stderr);
 					if (stdout.length > 0) {
 						ko.uilayout.toggleTab('git-console-widget', false);
 						try {
@@ -390,6 +389,19 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 								wrappedJSObject: {
 									level: "debug",
 									arguments: [ stdout ],
+								},
+							},
+							'git-console-log-event', null);	
+						} catch(e) {
+							console.log(e);
+						}
+					} else if (stderr.length > 0) {
+						ko.uilayout.toggleTab('git-console-widget', false);
+						try {
+						obs.notifyObservers({
+								wrappedJSObject: {
+									level: "info",
+									arguments: [ stderr ],
 								},
 							},
 							'git-console-log-event', null);	
