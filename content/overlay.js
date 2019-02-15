@@ -465,10 +465,6 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 	
 	this._addDynamicToolbarButton = () => {
 		const db = require('ko/dynamic-button');
-
-		const view = () => {
-			return ko.views.manager.currentView && ko.views.manager.currentView.title !== "New Tab";
-		};
 		
 		const button = db.register({
 			label: "Komodo Git",
@@ -686,7 +682,7 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 				},
 			],
 			isEnabled: () => {
-				return view();
+				return true;
 			},
 		});
 	};

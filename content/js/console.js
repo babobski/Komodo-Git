@@ -48,11 +48,6 @@ window.app = {};
         var li = document.createElement("li");
         li.classList.add("complex-format");
         li.classList.add("type-" + type);
-        
-        var typeIndicator = document.createElement("div");
-        typeIndicator.textContent = _ucFirst(type) + " ";
-        typeIndicator.classList.add("type-indicator");
-        li.appendChild(typeIndicator);
 
         if ((typeof aThing == "object") && nonIterable.indexOf(type) == -1)
         {
@@ -87,10 +82,6 @@ window.app = {};
                         childType = _getType(aThing[k]);
                         if (["undefined", "null", "boolean", "string", "float", "number"].indexOf(childType) != -1)
                             childValue = JSON.stringify(aThing[k]);
-                        else
-                            childValue = _ucFirst(childType)
-                        childValue = _ellipsis(childValue, 10);
-                        children.push(k + ": " + childValue);
                     }
                     
                     if (hasMore) children.push("..");
@@ -196,7 +187,11 @@ window.app = {};
     this.printLi = function(li)
     {
         var timestamp = document.createElement("div");
-        timestamp.classList.add("timestamp");
+        timestamp.classList.add("timestamp"),
+		spacer = document.createElement("li");
+		
+        spacer.textContent = '------------------------------ break ------------------------------';
+        spacer.classList.add("spacer");
         
         var date = new Date();
         var hours = ("0" + date.getHours()).substr(-2),
@@ -209,6 +204,7 @@ window.app = {};
         
         var scroll = true; // 5 pixel margin of error
         elem.output.appendChild(li);
+		elem.output.appendChild(spacer);
         if (scroll) elem.console.scrollTop = elem.console.scrollTopMax;
     }
 	
