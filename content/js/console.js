@@ -82,6 +82,10 @@ window.app = {};
                         childType = _getType(aThing[k]);
                         if (["undefined", "null", "boolean", "string", "float", "number"].indexOf(childType) != -1)
                             childValue = JSON.stringify(aThing[k]);
+						else
+                            childValue = _ucFirst(childType)
+                        childValue = _ellipsis(childValue, 10);
+                        children.push(k + ": " + childValue);
                     }
                     
                     if (hasMore) children.push("..");
