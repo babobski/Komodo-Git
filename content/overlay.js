@@ -647,7 +647,7 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 							label: "Git Remote Remove",
 							name: "git_remote_remove",
 							command: () => {
-								extensions.komodo_git.gitDiffStaged();
+								extensions.komodo_git.gitRemoteRemove();
 							},
 						},
 						{
