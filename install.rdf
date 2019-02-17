@@ -5,7 +5,7 @@
 <em:unpack>true</em:unpack>
 		<em:id>Komodo-Git@babobski.com</em:id>
 		<em:name>Komodo Git</em:name>
-		<em:version>2.0.0</em:version>
+		<em:version>2.0.1</em:version>
 		<em:description>Git intergration for Komodo Edit/Ide</em:description>
 		<em:creator>Bob de Haas</em:creator>
 		<em:homepageURL></em:homepageURL>

@@ -1,8 +1,10 @@
 ![logo](Komodo-Git.png)
 
 # Komodo Git
-Control you're git repo's inside komodo.  
+Control you're git repo's inside Komodo.  
 Execute git commands with just a few mouse-clicks or keyboard-commands away.
+
+![screenshot](screenshot.png)
 
 ## Available Commands
 The following Commands are available trough the addon.
@@ -46,15 +48,13 @@ The following Commands are available trough the addon.
 ## Accessibility
 
 Komodo Git is on different places integrated in Komodo.  
-There is a toolbar button added in the toolbar, also is Git available trough different menu's:
+There is a dynamic toolbar button added, also is Git available trough different menu's:
 
- * Toolbar-button (global commands)
+ * Dynamic Toolbar button (global commands)
  * Main toolbar (global commands)
  * Places widget (file based commands)
  * File tab (file based commands)
  * File context menu (file based commands)
-
-![Overlays](screenshot-overlays.jpg)
 
 ## Keyboard access
 The Komodo Git addon is build so it can completely be controlled using access-keys.  
