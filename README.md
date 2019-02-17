@@ -4,7 +4,7 @@
 Control you're git repo's inside Komodo.  
 Execute git commands with just a few mouse-clicks or keyboard-commands away.
 
-![screenshot](screenshot.png)
+![screenshot](screenshot.jpg)
 
 ## Available Commands
 The following Commands are available trough the addon.
