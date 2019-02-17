@@ -9,12 +9,6 @@ window.app = {};
         output: document.getElementById("output")
     }
     
-    var history = JSON.parse(prefs.getString("git_console_history", "[]"));
-    var historyPos = -1;
-
-    var charWidth = elem.inputMock.offsetWidth;
-    var charHeight = elem.inputMock.offsetHeight / 2;
-    
     this.print = function(type, data, dontFormat)
     {
         var li = document.createElement("li");
@@ -83,7 +77,7 @@ window.app = {};
                         if (["undefined", "null", "boolean", "string", "float", "number"].indexOf(childType) != -1)
                             childValue = JSON.stringify(aThing[k]);
 						else
-                            childValue = _ucFirst(childType)
+                            childValue = _ucFirst(childType);
                         childValue = _ellipsis(childValue, 10);
                         children.push(k + ": " + childValue);
                     }
@@ -111,7 +105,7 @@ window.app = {};
                         if ( ! aThing.hasOwnProperty(k)) proto = true;
                         try
                         {
-                            subLi = this.formatComplex(aThing[k])
+                            subLi = this.formatComplex(aThing[k]);
                         }
                         catch (e)
                         {
@@ -190,12 +184,11 @@ window.app = {};
   
     this.printLi = function(li)
     {
-        var timestamp = document.createElement("div");
-        timestamp.classList.add("timestamp"),
+        var timestamp = document.createElement("div"),
 		spacer = document.createElement("li");
 		
-        spacer.textContent = '------------------------------ break ------------------------------';
-        spacer.classList.add("spacer");
+		timestamp.classList.add("timestamp");
+		spacer.classList.add("spacer");
         
         var date = new Date();
         var hours = ("0" + date.getHours()).substr(-2),
@@ -211,6 +204,11 @@ window.app = {};
 		elem.output.appendChild(spacer);
         if (scroll) elem.console.scrollTop = elem.console.scrollTopMax;
     }
+	
+	this.clearConsole =function() {
+		elem.output.innerHTML = "";
+        this.print("output", "Console Cleared", true);
+	}
 	
 	var _getType = function(ob)
     {

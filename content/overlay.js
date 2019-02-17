@@ -17,8 +17,9 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 		hidingOutput,
 		prefs 			= Components.classes["@mozilla.org/preferences-service;1"]
 						.getService(Components.interfaces.nsIPrefService).getBranch("extensions.komodo_git.");
-		
-	window.removeEventListener('komodo-post-startup', self.addGitButton);
+						
+	window.removeEventListener("komodo-post-startup", self._addDynamicToolbarButton, false);
+	
 
 	this.gitStatus = () => {
 		var command = 'status';
@@ -329,7 +330,7 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 		var path;
 		var gitUrl = prefs.getCharPref('gitDirectory'),
 			autoHide = prefs.getBoolPref('autoHide'),
-			timeOut = 4200;
+			timeOut = 4400;
 		
 		if (gitUrl === 'currentProject') {
 			var currentProject = ko.projects.manager.currentProject;
@@ -412,7 +413,7 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 					}
 				}
 				if (autoHide && !forceOutput) {
-					hidingOutput = setTimeout(function(){
+					hidingOutput = setTimeout( () => {
 						self.hideBottomPane();
 					}, timeOut);
 				}
@@ -434,14 +435,14 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 		if (currentProject !== null && prefs.getCharPref('gitDirectory') === 'currentProject') {
 			directory = ko.interpolate.interpolateString('%i');
 		} 
-		setTimeout(function(){
+		setTimeout( () => {
 			ko.run.command('cmd /K "cd ' + directory, {});
 		}, 30);
 	}
 
 	this.runCallback = (callback) => {
 		if (callback) {
-			setTimeout(function() {
+			setTimeout( () => {
 				switch (callback) {
 					case 'status':
 						self.gitStatus();
@@ -465,6 +466,9 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 	
 	this._addDynamicToolbarButton = () => {
 		const db = require('ko/dynamic-button');
+		var isView = () => {
+			return ko.views.manager.currentView;
+		};
 		
 		const button = db.register({
 			label: "Komodo Git",
@@ -682,11 +686,12 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 				},
 			],
 			isEnabled: () => {
-				return true;
+				return isView();
 			},
 		});
 	};
-	self._addDynamicToolbarButton();
+	
+	window.addEventListener("komodo-post-startup", self._addDynamicToolbarButton, false);
 	
 }).apply(extensions.komodo_git);
 

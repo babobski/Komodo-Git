@@ -10,11 +10,11 @@
 <body class="editor-field">
     
 <div id="git-console" class="editor-field">
-  <ul id="output" onclick="clearOutPut();"></ul>
+  <ul id="output"></ul>
 </div>
 
 <form class="widgetToolbarWrap" id="statusbar">
-    <button>Clear Output</button>
+    <!--<button onclick="window.app.clearConsole();">Clear Output</button>-->
 <span id="input-mock">a
 a</span> <!-- Used to measure char width/height, do not alter contents -->
     </div>
@@ -22,12 +22,6 @@ a</span> <!-- Used to measure char width/height, do not alter contents -->
 
 <script src="chrome://komodo_git/content/js/console.js"></script>
 <script src="chrome://komodo_git/content/js/observer.js"></script>
-<script>
-  function clearOutPut() {
-    var output = document.getElementById('output');
-    output.innerHTML = '';
-  }
-</script>
 
 </body>
 </html>
