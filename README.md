@@ -10,39 +10,41 @@ Execute git commands with just a few mouse-clicks or keyboard-commands away.
 The following Commands are available trough the addon.
 
 #### Global Commands
- * Git Status
- * Git Add
- * Git Reset
- * Git Reset Hard
- * Git Commit
- * Git Fetch
- * Git Pull
- * Git Push
- * Git Stash
-  * Git Stash
-  * Git Stash List
-  * Git Stash Pop
-  * Git Stash Drop
- * Git Diff
-  * Git Diff
-  * Git Difftool
-  * Git Diff Staged
- * Git Merge
-  * Git Merge
-  * Git Mergetool
- * Git Remote
-  * Git Remote List
-  * Git Remote Add
-  * Git Remote Remove
-  * Git Remote Rename
-  * Git Remote Set Url
- * Run CMD
- * Settings
+- Git Status
+- Git Init
+- Git Clone
+- Git Add
+- Git Reset
+- Git Reset Hard
+- Git Commit
+- Git Fetch
+- Git Pull
+- Git Push
+- Git Stash
+ - Git Stash
+ - Git Stash List
+ - Git Stash Pop
+ - Git Stash drop
+- Git Diff
+ - Git Diff
+ - Git Difftool
+ - Git Diff Staged
+- Git Merge
+ - Git Merge
+ - Git Mergetool
+- Git Remote
+ - Git Remote List
+ - Git Remote Add
+ - Git Remote Remove
+ - Git Remote Rename
+ - Git Remote Set Url
+- Git Run CMD
+- Settings
  
 #### File Commands
- * Git Add File
- * Git Diff File
- * Git Revert Changes in file
+- Git Add File
+- Git Diff File
+- Git Revert Changes In File
   
 
 ## Accessibility
