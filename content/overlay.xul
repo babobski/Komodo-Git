@@ -7,6 +7,8 @@
 	
 	<commandset id="allcommands">
 		<command id="Tasks:git_status" oncommand="extensions.komodo_git.gitStatus();"/>
+		<command id="Tasks:git_init" oncommand="extensions.komodo_git.gitInit();"/>
+		<command id="Tasks:git_clone" oncommand="extensions.komodo_git.gitClone();"/>
 		<command id="Tasks:git_add" oncommand="extensions.komodo_git.gitAdd();"/>
 		<command id="Tasks:git_reset" oncommand="extensions.komodo_git.gitReset();"/>
 		<command id="Tasks:git_reset_hard" oncommand="extensions.komodo_git.gitResetHard();"/>
@@ -46,6 +48,16 @@
 					accesskey="s"
 					label="Git status"
 					observes="Tasks:git_status"
+					class="menu-iconic-wide" />
+			<menuitem id="menu_git_init"
+					accesskey="a"
+					label="Git init"
+					observes="Tasks:git_init"
+					class="menu-iconic-wide" />
+			<menuitem id="menu_git_clone"
+					accesskey="a"
+					label="Git clone"
+					observes="Tasks:git_clone"
 					class="menu-iconic-wide" />
 			<menuitem id="menu_git_add"
 					accesskey="a"

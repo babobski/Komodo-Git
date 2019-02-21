@@ -14,6 +14,16 @@
 		desc="Git: Git status"
 		oncommand="extensions.komodo_git.gitStatus();"/>
 		<broadcaster
+		id="cmd_git_init"
+		key="key_cmd_git_init"
+		desc="Git: Git init"
+		oncommand="extensions.komodo_git.gitInit();"/>
+		<broadcaster
+		id="cmd_git_clone"
+		key="key_cmd_git_clone"
+		desc="Git: Git clone"
+		oncommand="extensions.komodo_git.gitClone();"/>
+		<broadcaster
 		id="cmd_git_add"
 		key="key_cmd_git_add"
 		desc="Git: Git add"

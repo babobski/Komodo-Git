@@ -34,6 +34,18 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 
 		self._runOutput(command, callback);
 	}
+	
+	this.gitClone = () => {
+		var message = ko.interpolate.interpolateString('%(ask:Clone:url folder)');
+
+		if (message === null) {
+			return false;
+		}
+
+		var command = 'clone ' + message;
+
+		self._runOutput(command);
+	}
 
 	this.gitAdd = () => {
 		var command = 'add -A',
@@ -490,6 +502,13 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 					name: "git_init",
 					command: () => {
 						extensions.komodo_git.gitInit();
+					}
+				},
+				{
+					label: "Git clone",
+					name: "git_clone",
+					command: () => {
+						extensions.komodo_git.gitClone();
 					}
 				},
 				{
