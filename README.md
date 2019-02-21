@@ -26,18 +26,18 @@ The following Commands are available trough the addon.
   - Git Stash Pop
   - Git Stash drop
 - Git Diff
- - Git Diff
- - Git Difftool
- - Git Diff Staged
+  - Git Diff
+  - Git Difftool
+  - Git Diff Staged
 - Git Merge
- - Git Merge
- - Git Mergetool
+  - Git Merge
+  - Git Mergetool
 - Git Remote
- - Git Remote List
- - Git Remote Add
- - Git Remote Remove
- - Git Remote Rename
- - Git Remote Set Url
+  - Git Remote List
+  - Git Remote Add
+  - Git Remote Remove
+  - Git Remote Rename
+  - Git Remote Set Url
 - Git Run CMD
 - Settings
  
