@@ -21,10 +21,10 @@ The following Commands are available trough the addon.
 - Git Pull
 - Git Push
 - Git Stash
- * Git Stash
- * Git Stash List
- * Git Stash Pop
- * Git Stash drop
+  - Git Stash
+  - Git Stash List
+  - Git Stash Pop
+  - Git Stash drop
 - Git Diff
  - Git Diff
  - Git Difftool
