@@ -20,6 +20,10 @@
 					label="Git revert changes in file"
 					observes="Tasks:git_reset_file"
 					class="menu-iconic-wide" />
+			<menuitem id="menu_git_tab_context_menu_file_view_on_github"
+					label="View on GitHub"
+					observes="Tasks:git_view_on_github"
+					class="menu-iconic-wide" />
 			</menupopup>
 		</menu>
 	</menupopup>
