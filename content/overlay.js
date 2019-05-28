@@ -241,7 +241,58 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 		}
 		return false;
 	}
-	
+
+	this.gitViewOnGithub = () => {
+		// Check for file
+		var koDoc = ko.views.manager.currentView.koDoc;
+		if (koDoc === null)
+			return false;
+		var filename = koDoc.displayPath;
+
+		// Check for git path
+		var gitPath = this._getRunPath();
+		if (gitPath === null)
+			return false;
+
+		var runFunc = function(run, callback)
+		{
+			shell.exec(
+				run,
+				 {
+					"runIn": 'command-output-window',
+					"openOutputWindow": false,
+				},
+				function(error, stdout, stderr) {
+					if (error === null)
+						callback(stdout);
+				}
+			);
+		};
+
+		// Get remote URL
+		var run1 = 'git -C "' + gitPath + '" config --get remote.origin.url';
+		runFunc(run1, function(stdout) {
+			stdout = stdout.trim();
+			var match = /@github\.com:(.*)\.git$/.exec(stdout);
+			if (match !== null)
+			{
+				repoName = match[1];
+				var run2 = 'git -C "' + gitPath + '" rev-parse --show-toplevel';
+				runFunc(run2, function(gitBasePath) {
+					gitBasePath = gitBasePath.trim();
+					if (filename.indexOf(gitBasePath) === 0)
+					{
+						filename = filename.substr(gitBasePath.length);
+						if (filename[0] == "/")
+							filename = filename.substr(1);
+						var url = "https://github.com/" + repoName + "/tree/master/" + filename;
+						ko.browse.openUrlInDefaultBrowser(url);
+					}
+				});
+			}
+		});
+	}
+
 	this.gitDiffFile = () => {
 		var command = null;
 		var koDoc = ko.views.manager.currentView.koDoc;
@@ -333,40 +384,51 @@ if (typeof(extensions.komodo_git) === 'undefined') extensions.komodo_git = {
 		return false;
 	}
 	
-
-	this._runOutput = (command, callback, forceOutput) => {
-		command = command || false;
-		callback = callback || false;
-		forceOutput = forceOutput || false;
-		
-		var path;
-		var gitUrl = prefs.getCharPref('gitDirectory'),
-			autoHide = prefs.getBoolPref('autoHide'),
-			timeOut = 4400;
-		
+	this._getRunPath = () => {
+		var path = null;
+		var gitUrl = prefs.getCharPref('gitDirectory');
 		if (gitUrl === 'currentProject') {
 			var currentProject = ko.projects.manager.currentProject;
 		
 			if (currentProject === null) {
 				notify.send('No current project selected', 'Tools');
-				return false;
+				return null;
 			}
 	
 			path = currentProject.liveDirectory;
+		} else if (gitUrl === 'currentFile') {
+			var koDoc = ko.views.manager.currentView.koDoc;
+			if (koDoc === null)
+				notify.send('No current file', 'Tools');
+			path = koDoc.file.dirName;
 		} else {
 			var placesManger = ko.places.manager;
 			
 			if (placesManger !== undefined) {
 				path = uriParse.displayPath(placesManger.currentPlace);
 			} else {
-				return false;
+				return null;
 			}	
 		}
 		
 		if (self.isRemote(path)) {
 			notify.send('Current project is remote', 'Tools');
-			return false;
+			return null;
 		}
+
+		return path;
+	}
+
+	this._runOutput = (command, callback, forceOutput) => {
+		command = command || false;
+		callback = callback || false;
+		forceOutput = forceOutput || false;
+		
+		var path = this._getRunPath();
+		if (path === null)
+			return false;
+		var autoHide = prefs.getBoolPref('autoHide'),
+			timeOut = 4400;
 		
 		clearTimeout(hidingOutput);
 

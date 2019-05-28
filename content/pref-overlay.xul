@@ -5,7 +5,7 @@
 
 <prefwindow id="komodo_git-prefs"
 	 title="Komodo Git Preferences"
-	 width="210"
+	 width="300"
 	 height="180"
 	 hidechrome="true"
 	 xmlns:html="http://www.w3.org/1999/xhtml"
@@ -40,6 +40,7 @@
 					<menupopup>
 						<menuitem value="currentProject" label="Current project root"/>
 						<menuitem value="placesRoot" label="Places Root"/>
+						<menuitem value="currentFile" label="Current file"/>
 					</menupopup>
 				</menulist>
 			</hbox>

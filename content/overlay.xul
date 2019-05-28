@@ -32,6 +32,7 @@
 		<command id="Tasks:git_remote_rename" oncommand="extensions.komodo_git.gitRemoteRename();"/>
 		<command id="Tasks:git_remote_set_url" oncommand="extensions.komodo_git.gitRemoteSetUrl();"/>
 		<command id="Tasks:git_add_file" oncommand="extensions.komodo_git.gitAddFile();"/>
+		<command id="Tasks:git_view_on_github" oncommand="extensions.komodo_git.gitViewOnGithub();"/>
 		<command id="Tasks:git_diff_file" oncommand="extensions.komodo_git.gitDiffFile();"/>
 		<command id="Tasks:git_reset_file" oncommand="extensions.komodo_git.gitResetFile();"/>
 		<command id="Tasks:git_add_file_places" oncommand="extensions.komodo_git.gitAddFilePlaces();"/>
